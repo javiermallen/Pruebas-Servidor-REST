@@ -7,6 +7,7 @@ class Server {
         this.app           = express();
         this.port          = process.env.PORT;
         this.rutasUsuarios = '/api/usuarios';
+        this.authPath      = '/api/auth';
 
         //Conectar a la base de datos
         this.conectarBD();
@@ -29,7 +30,8 @@ class Server {
     }
     routes(){
         //Las rutas las tenmos en la carpeta routers
-        this.app.use( this.rutasUsuarios, require( '../routers/usuarios' ));
+        this.app.use( this.authPath, require( '../routers/auth' ) );
+        this.app.use( this.rutasUsuarios, require( '../routers/usuarios' ) );
     }
     listen(){
         this.app.listen( this.port, () =>{

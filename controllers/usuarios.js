@@ -1,9 +1,9 @@
-const { peticion, respuesta } = require( 'express' );
+const { request, response } = require( 'express' );
 const bcrypt = require('bcryptjs');
 
 const Usuario = require( '../models/usuario' );
 
-const usuariosGet = async ( req = peticion, res = respuesta ) => {
+const usuariosGet = async ( req = request, res = response ) => {
     const { limite =  5, desde } = req.query;
     const query                  = { estado:true }
 
@@ -25,7 +25,7 @@ const usuariosGet = async ( req = peticion, res = respuesta ) => {
     } ) 
 }
 
-const usuariosPost = async ( req = peticion, res = respuesta ) => {
+const usuariosPost = async ( req = request, res = response ) => {
 
     const { nombre, email, password, google, rol, estado } = req.body;
     const usuario  = new Usuario( { nombre, email, password, google, rol, estado } );
@@ -41,7 +41,7 @@ const usuariosPost = async ( req = peticion, res = respuesta ) => {
     })
 }
 
-const usuariosPut = async( req, res = respuesta ) => {
+const usuariosPut = async( req = request, res = response ) => {
     const { id } = req.params;
     const { _id, password, email, google, ...resto } = req.body;
     if( password ){
@@ -52,22 +52,25 @@ const usuariosPut = async( req, res = respuesta ) => {
     const usuario = await Usuario.findByIdAndUpdate( id, resto );
 
     res.json({
-        respuesta: "Petición PUT a mi api/usuarios",
+        response: 'Petición PUT a mi api/usuarios',
         usuario
     })
 
 }
-const usuariosDelete = async ( req = peticion, res = respuesta ) => {
+const usuariosDelete = async ( req = request, res = response ) => {
     const { id } = req.params;
     const usuario = await Usuario.findByIdAndUpdate( id, { estado: false } )
 
+    //const usuarioAutenticado = req.usuario;
+
     res.json({
-        usuario
+        usuario,
+        //usuarioAutenticado
     })
 }
-const usuariosPatch = ( req, res = respuesta ) => {
+const usuariosPatch = ( req = request, res = response ) => {
     res.json({
-        respuesta: 'Petición PATCH a mi api/usuarios'
+        response: 'Petición PATCH a mi api/usuarios'
     })
 }
 
