@@ -29,7 +29,8 @@ const UsuarioSchema = Schema({
         type: String,
         required: true,
         //Es recomendable escribir los roles que puede haber
-        enum: [ 'ADMIN_ROLE', 'USER_ROLE' ]
+        enum: [ 'ADMIN_ROLE', 'USER_ROLE' ],
+        default: 'USER_ROLE'
     },
     img: {
         //Para la imagen pasaremos una cadena de texto que no será obligatoria
